@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="TDOA_RCE:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/TDOA_RCE_jar</output-path>
+    <root id="archive" name="TDOA_RCE.jar">
+      <element id="module-output" name="TDOA_RCE" />
+    </root>
+  </artifact>
+</component>
