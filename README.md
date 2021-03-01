@@ -14,7 +14,7 @@ SQL注入POC: 2个<br />
 <br />
 
 ## 工具面板截图
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/516736/16141329552479f1b3b4d901946658925b36d4a6c141b.png#align=left&display=inline&height=518&margin=%5Bobject%20Object%5D&name=image.png&originHeight=518&originWidth=716&size=36652&status=done&style=stroke&width=716)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/516736/1614132955247-9f1b3b4d-9019-4665-8925-b36d4a6c141b.png)
 
 <br />
 <br />
