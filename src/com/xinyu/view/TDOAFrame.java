@@ -48,6 +48,7 @@ public class TDOAFrame extends JFrame {
         jcomboBox.addItem("文件包含GetShell");
         jcomboBox.addItem("后台上传GetShell");
         jcomboBox.addItem("文件删除GetShell");
+        jcomboBox.addItem("V11.7_GetShell");
         JButton button2 = new JButton("一键利用");
         p4.add(jLabel2);
         p4.add(field_cookie);

