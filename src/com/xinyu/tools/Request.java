@@ -88,6 +88,7 @@ public class Request {
 
     /**
      * 文件删除专用,重新上传auth.inc.php文件
+     *
      * @param url
      * @return
      */
@@ -106,10 +107,10 @@ public class Request {
             requestStream.writeBytes(tempParams.toString());
 
             //第一种方式,从文件读取,发送文件数据
-//            FileInputStream fileInput = new FileInputStream("auth.inc.php");
             int bytesRead;
             byte[] buffer = new byte[1024];
-            DataInputStream in = new DataInputStream(new FileInputStream("/auth.inc.php"));
+            InputStream inputStream = Request.class.getResourceAsStream("/auth.inc.php");
+            DataInputStream in = new DataInputStream(inputStream);
             while ((bytesRead = in.read(buffer)) != -1) {
                 requestStream.write(buffer, 0, bytesRead);
             }
@@ -160,7 +161,7 @@ public class Request {
 //            System.out.println(conn.getResponseCode());
             if (conn.getResponseCode() != 500 && conn.getResponseCode() != 404 && conn.getResponseCode() != 403) {
                 response.setText(streamToString(conn.getInputStream()));
-            }else{
+            } else {
                 //防止404时响应包出现空指针异常
                 response.setText("");
             }

