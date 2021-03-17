@@ -49,11 +49,9 @@ public class GetCookieActionListener implements ActionListener {
     public String getSession(String url) {
         //任意用户登录
         String[] pocArray = {"poc1", "poc2", "poc3", "poc4", "poc5"}; //默认poc排序
-        ArrayList<String> pocArrayList = new ArrayList<>();
         String session = null;
-
         if (this.version.equals("11.7")) {
-            pocArray = new String[]{"poc5", "poc1", "poc2", "poc3", "poc4"};
+            pocArray = new String[]{"poc5"};
         }
 
 

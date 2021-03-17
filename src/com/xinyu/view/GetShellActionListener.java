@@ -15,6 +15,7 @@ public class GetShellActionListener implements ActionListener {
     private JTextField field_cookie; //Cookie
     private JComboBox jcomboBox; //利用方式
     private TextArea textArea; //多行文本框,显示程序运行状态
+    private String version = null;
 
     public GetShellActionListener(JTextField field_url, JTextField field_cookie, JComboBox jcomboBox, TextArea textArea) {
         this.field_url = field_url;
@@ -26,6 +27,9 @@ public class GetShellActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String url = Other.dataCleaning(this.field_url.getText() + "/", Pattern.compile("(https?://.*?)/"));
+        this.version = Other.getVersion(url);
+
+
         String choose = (String) jcomboBox.getSelectedItem();
         String shell_url = null;
         switch (choose) {
@@ -92,8 +96,11 @@ public class GetShellActionListener implements ActionListener {
      * @return
      */
     public String getShell(String url, String session) {
-        String[] pocArray = {"poc1", "poc2", "poc3"};
+        String[] pocArray = {"poc1", "poc2", "poc3", "poc6"}; //默认poc排序
         String shell = null;
+        if (this.version.equals("11.7")) {
+            pocArray = new String[]{"poc6"};
+        }
         textArea.append("\n正在尝试进行getshell...");
         int i = 0;
         do {

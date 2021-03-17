@@ -47,11 +47,11 @@ public class Other {
      * @return 返回一个7位数的随机字符串
      */
     public static String getRandomFileName() {
-        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < 7; i++) {
-            int number = random.nextInt(62);
+            int number = random.nextInt(26);
             sb.append(str.charAt(number));
         }
         return sb.toString();
